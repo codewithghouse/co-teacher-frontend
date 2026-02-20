@@ -42,10 +42,15 @@ const LessonPlanner = () => {
 
     useEffect(() => {
         const fetchSubjects = async () => {
+            if (!curriculum || !grade) {
+                setSubjects([]);
+                return;
+            }
             try {
-                const res = await api.get("/curriculum/subjects");
+                const res = await api.get(`/curriculum/subjects/${curriculum}/${grade}`);
                 setSubjects(res.data);
             } catch (err) {
+                console.error("Failed to fetch subjects", err);
                 // Mock subjects if API fails
                 setSubjects([
                     { id: "1", name: "Mathematics" },
@@ -56,7 +61,7 @@ const LessonPlanner = () => {
             }
         };
         fetchSubjects();
-    }, []);
+    }, [curriculum, grade]);
 
     const handleGenerate = async () => {
         if (!topic || !curriculum || !grade || !subject) {
