@@ -37,8 +37,8 @@ export function AILessonPlanGeneratorTab({ initialMode = "lesson", preloadedLess
             {/* Header with name provided by user */}
             <div className="flex items-center justify-between mb-2 print:hidden">
                 <div>
-                    <h1 className="text-3xl font-black text-slate-900 font-display tracking-tight">AI Lesson Plan Generator</h1>
-                    <p className="text-slate-500 font-bold mt-1">Design, generate and manage your AI-powered curriculum</p>
+                    <h1 className="text-2xl sm:text-3xl font-black text-slate-900 font-display tracking-tight leading-tight">AI Lesson Plan Generator</h1>
+                    <p className="text-slate-500 text-xs sm:text-sm font-bold mt-1">Design, generate and manage your AI-powered curriculum</p>
                 </div>
             </div>
 

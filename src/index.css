@@ -73,22 +73,58 @@
     @apply border-border;
   }
 
-  body {
-    @apply bg-background text-foreground;
-    font-family: 'Inter', sans-serif;
-    font-feature-settings: "rlig" 1, "calt" 1;
+  h1 {
+    font-size: clamp(1.875rem, 5vw + 1rem, 3rem);
+    line-height: 1.1;
+    @apply font-black tracking-tight mb-4;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Outfit', sans-serif;
+  h2 {
+    font-size: clamp(1.5rem, 4vw + 1rem, 2.25rem);
+    line-height: 1.2;
+    @apply font-bold tracking-tight mb-3;
+  }
+
+  h3 {
+    font-size: clamp(1.25rem, 3vw + 1rem, 1.875rem);
+    @apply font-bold mb-2;
+  }
+
+  p {
+    font-size: clamp(0.875rem, 1vw + 0.5rem, 1.125rem);
+    @apply leading-relaxed text-muted-foreground;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased selection:bg-indigo-100 selection:text-indigo-900;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    width: 100%;
+    position: relative;
   }
 }
 
 .glass {
-  @apply bg-white/80 backdrop-blur-md border border-white/20;
+  @apply bg-white/80 backdrop-blur-md border border-white/20 shadow-sm;
+}
+
+/* Custom scrollbar for better mobile feel */
+@media (min-width: 1024px) {
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-100 rounded-full hover:bg-indigo-100/50 transition-colors;
+  }
+}
+
+/* Fix for safe area on modern mobile devices */
+.safe-p {
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-top: env(safe-area-inset-top);
 }

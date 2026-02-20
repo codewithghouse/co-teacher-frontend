@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 // import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Logo } from "@/components/common/Logo";
@@ -17,13 +18,13 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-[#296374] shadow-sm border-b border-white/80">
-      <div className="container mx-auto px-6">
+    <nav className="fixed top-0 left-0 right-0 z-50 glass shadow-sm border-b border-white/20">
+      <div className="container mx-auto px-4 lg:px-6">
         <div className="flex items-center justify-between h-16 md:h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-2">
-            <Logo className="w-10 h-10 bg-white/20 rounded-xl backdrop-blur-sm p-1" />
-            <span className="font-display font-bold text-2xl text-white">
+            <Logo className="w-10 h-10 bg-[#1A3263] rounded-xl shadow-md p-1" />
+            <span className="font-display font-bold text-xl md:text-2xl text-[#1A3263]">
               AI Co-teacher
             </span>
           </Link>
@@ -34,7 +35,7 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.href}
-                className="text-sm font-medium text-white/90 hover:text-white transition-colors"
+                className="text-sm font-semibold text-slate-600 hover:text-[#1A3263] transition-colors"
               >
                 {link.name}
               </Link>
@@ -44,19 +45,20 @@ const Navbar = () => {
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
             {isAuthenticated ? (
-              <Link to="/dashboard" className="bg-white hover:bg-gray-100 text-black rounded-lg px-6 py-2 font-bold shadow-lg shadow-black/10">Go to Dashboard</Link>
+              <Link to="/dashboard" className="bg-[#1A3263] hover:bg-[#1A3263]/90 text-white rounded-lg px-6 py-2.5 font-bold shadow-lg shadow-[#1A3263]/10 text-sm">Go to Dashboard</Link>
             ) : (
               <>
-                <Link to="/login" className="text-white hover:text-white/80 px-4 py-2 font-medium">Log In</Link>
-                <Link to="/signup" className="bg-white hover:bg-gray-100 text-black rounded-lg px-6 py-2 font-bold shadow-lg shadow-black/10">Sign up free</Link>
+                <Link to="/login" className="text-slate-600 hover:text-[#1A3263] px-4 py-2 font-semibold text-sm">Log In</Link>
+                <Link to="/signup" className="bg-[#1A3263] hover:bg-[#1A3263]/90 text-white rounded-lg px-6 py-2.5 font-bold shadow-lg shadow-[#1A3263]/10 text-sm">Sign up free</Link>
               </>
             )}
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="md:hidden p-2 rounded-lg hover:bg-white/10 text-white"
+            className="md:hidden p-2 rounded-lg hover:bg-slate-100 text-slate-900 transition-colors"
             onClick={() => setIsOpen(!isOpen)}
+            aria-label="Toggle Menu"
           >
             {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -64,34 +66,39 @@ const Navbar = () => {
       </div >
 
       {/* Mobile Menu */}
-      {
-        isOpen && (
-          <div className="md:hidden bg-[#005461] border-t border-white/10 shadow-xl overflow-hidden">
-            <div className="container mx-auto px-6 py-6 space-y-4">
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="md:hidden bg-white border-t border-slate-100 shadow-2xl overflow-hidden glass"
+          >
+            <div className="px-6 py-8 space-y-6">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   to={link.href}
-                  className="block text-base font-medium text-white/90 hover:text-white py-2"
+                  className="block text-lg font-bold text-slate-800 hover:text-[#1A3263]"
                   onClick={() => setIsOpen(false)}
                 >
                   {link.name}
                 </Link>
               ))}
-              <div className="pt-6 space-y-3 border-t border-white/10">
+              <div className="pt-6 space-y-4 border-t border-slate-100">
                 {isAuthenticated ? (
-                  <Link to="/dashboard" onClick={() => setIsOpen(false)} className="block w-full text-center bg-white text-black rounded-lg py-3 font-bold">Go to Dashboard</Link>
+                  <Link to="/dashboard" onClick={() => setIsOpen(false)} className="block w-full text-center bg-[#1A3263] text-white rounded-xl py-4 font-bold shadow-xl shadow-[#1A3263]/20">Go to Dashboard</Link>
                 ) : (
                   <>
-                    <Link to="/login" onClick={() => setIsOpen(false)} className="block w-full text-center text-white py-2 font-medium">Log In</Link>
-                    <Link to="/signup" onClick={() => setIsOpen(false)} className="block w-full text-center bg-white text-black rounded-lg py-3 font-bold">Sign up free</Link>
+                    <Link to="/login" onClick={() => setIsOpen(false)} className="block w-full text-center text-slate-800 py-2 font-bold text-lg">Log In</Link>
+                    <Link to="/signup" onClick={() => setIsOpen(false)} className="block w-full text-center bg-[#1A3263] text-white rounded-xl py-4 font-bold shadow-xl shadow-[#1A3263]/20">Sign up free</Link>
                   </>
                 )}
               </div>
             </div>
-          </div>
-        )
-      }
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav >
   );
 };

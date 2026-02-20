@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   GraduationCap,
   LayoutDashboard,
@@ -68,6 +68,7 @@ const menuItems = [
 const TeacherDashboard = () => {
   const { logout } = useAuth();
   const [activeTab, setActiveTab] = useState("dashboard");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [assistantMode, setAssistantMode] = useState<"lesson" | "material" | "quiz">("lesson");
   const [selectedLesson, setSelectedLesson] = useState<any>(null);
   const [generatorSubTab, setGeneratorSubTab] = useState<"generate" | "library">("generate");
@@ -116,17 +117,43 @@ const TeacherDashboard = () => {
   return (
     <div className="flex h-screen bg-[#F8FAFC]">
       {/* Sidebar */}
-      <aside className="w-64 bg-[#1A3263] border-r border-white/10 hidden lg:flex flex-col fixed h-full z-40 print:hidden">
-        <div className="p-8 flex items-center gap-3">
-          <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#1A3263] shadow-lg">
-            <GraduationCap className="w-6 h-6" />
+      {/* Mobile Menu Backdrop */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 lg:hidden"
+          />
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar - Mobile and Desktop */}
+      <aside className={`fixed inset-y-0 left-0 bg-[#1A3263] border-r border-white/10 flex flex-col z-50 transition-transform duration-300 lg:translate-x-0 lg:w-64 print:hidden ${isMobileMenuOpen ? "translate-x-0 w-[280px]" : "-translate-x-full w-64"
+        }`}>
+        <div className="p-8 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center text-[#1A3263] shadow-lg">
+              <GraduationCap className="w-6 h-6" />
+            </div>
+            <span className="text-xl font-bold text-white font-display tracking-tight">Co-Teacher</span>
           </div>
-          <span className="text-xl font-bold text-white font-display tracking-tight">Co-Teacher</span>
+          <button
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="lg:hidden text-white/70 hover:text-white p-2"
+          >
+            <Plus className="w-6 h-6 rotate-45" />
+          </button>
         </div>
 
-        <nav className="flex-1 px-4 space-y-1 mt-4">
+        <nav className="flex-1 px-4 space-y-1 mt-4 overflow-y-auto overflow-x-hidden">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => {
+              navigate("/");
+              setIsMobileMenuOpen(false);
+            }}
             className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium text-slate-300 hover:bg-white/10 hover:text-white"
           >
             <div className="w-5 h-5 flex items-center justify-center">
@@ -138,7 +165,10 @@ const TeacherDashboard = () => {
           {menuItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                setActiveTab(item.id);
+                setIsMobileMenuOpen(false);
+              }}
               className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${activeTab === item.id
                 ? "bg-white text-[#1A3263] shadow-md"
                 : "text-slate-300 hover:bg-white/10 hover:text-white"
@@ -162,18 +192,26 @@ const TeacherDashboard = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 lg:ml-64 overflow-auto">
-        <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-8 py-4 print:hidden">
+      <main className="flex-1 lg:ml-64 overflow-x-hidden min-h-screen">
+        <header className="bg-white/80 backdrop-blur-md sticky top-0 z-30 border-b border-slate-100 px-4 lg:px-8 py-4 print:hidden">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-900 font-display">Welcome back!</h1>
-              <p className="text-slate-500 text-sm mt-0.5 font-medium">Manage your classes and AI-generated content</p>
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setIsMobileMenuOpen(true)}
+                className="lg:hidden p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
+                aria-label="Toggle Menu"
+              >
+                <Plus className="w-6 h-6" />
+              </button>
+              <div>
+                <h1 className="text-xl lg:text-2xl font-bold text-slate-900 font-display transition-all">Welcome back!</h1>
+                <p className="text-slate-500 text-xs lg:text-sm mt-0.5 font-medium hidden xs:block">Manage your classes and AI content</p>
+              </div>
             </div>
-
           </div>
         </header>
 
-        <div className="p-8 space-y-8">
+        <div className="p-4 sm:p-8 space-y-6 sm:space-y-8">
           <Suspense fallback={
             <div className="flex flex-col items-center justify-center h-[400px] gap-4">
               <Loader2 className="w-8 h-8 animate-spin text-indigo-500" />
@@ -183,7 +221,7 @@ const TeacherDashboard = () => {
             {activeTab === "dashboard" ? (
               <>
                 {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                   {statsLoading ? (
                     Array(4).fill(0).map((_, i) => (
                       <div key={i} className="h-32 rounded-2xl bg-white animate-pulse shadow-sm" />
@@ -218,12 +256,12 @@ const TeacherDashboard = () => {
                 </div>
 
                 {/* Quick Actions */}
-                <Card className="border-none shadow-sm bg-white p-8">
-                  <div className="mb-8">
-                    <h3 className="text-xl font-bold text-slate-900 font-display">AI Tools</h3>
-                    <p className="text-slate-500 text-sm font-medium">Generate assessments and materials instantly</p>
+                <Card className="border-none shadow-sm bg-white p-5 sm:p-8">
+                  <div className="mb-6 sm:mb-8">
+                    <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-display">AI Tools</h3>
+                    <p className="text-slate-500 text-xs sm:text-sm font-medium">Generate assessments and materials instantly</p>
                   </div>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
                     {quickActions.map((action, index) => (
                       <motion.button
                         key={index}
@@ -232,22 +270,22 @@ const TeacherDashboard = () => {
                           setGeneratorSubTab("generate");
                           setActiveTab('generator');
                         }}
-                        className="group p-8 rounded-2xl border border-slate-100 hover:border-[#4F46E5] hover:bg-slate-50 transition-all flex flex-col items-center gap-4"
+                        className="group p-5 sm:p-8 rounded-2xl border border-slate-100 hover:border-[#4F46E5] hover:bg-slate-50 transition-all flex flex-col items-center gap-3 sm:gap-4"
                       >
-                        <div className={`w-14 h-14 rounded-2xl ${action.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                          <action.icon className={`w-7 h-7 ${action.iconColor}`} />
+                        <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl ${action.bgColor} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                          <action.icon className={`w-6 h-6 sm:w-7 sm:h-7 ${action.iconColor}`} />
                         </div>
-                        <span className="font-bold text-slate-800 text-sm">{action.label}</span>
+                        <span className="font-bold text-slate-800 text-xs sm:text-sm">{action.label}</span>
                       </motion.button>
                     ))}
                   </div>
                 </Card>
 
                 {/* Lessons and Schedule */}
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-12">
-                  <Card className="lg:col-span-2 border-none shadow-sm bg-white p-8">
-                    <div className="flex items-center justify-between mb-8">
-                      <h3 className="text-xl font-bold text-slate-900 font-display">Recent Lessons</h3>
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 pb-12">
+                  <Card className="lg:col-span-2 border-none shadow-sm bg-white p-5 sm:p-8">
+                    <div className="flex items-center justify-between mb-6 sm:mb-8">
+                      <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-display">Recent Lessons</h3>
                       <Button variant="ghost" onClick={() => {
                         setGeneratorSubTab("library");
                         setActiveTab('generator');
@@ -287,13 +325,13 @@ const TeacherDashboard = () => {
                     </div>
                   </Card>
 
-                  <Card className="border-none shadow-sm bg-white p-6">
-                    <div className="flex items-center justify-between mb-6">
+                  <Card className="border-none shadow-sm bg-white p-5 sm:p-6">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                       <div>
-                        <h3 className="text-xl font-bold text-slate-900 font-display">Today's Schedule</h3>
-                        <p className="text-slate-500 text-sm font-medium">Your upcoming classes</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-slate-900 font-display">Today's Schedule</h3>
+                        <p className="text-slate-500 text-xs sm:text-sm font-medium">Your upcoming classes</p>
                       </div>
-                      <Button variant="outline" className="gap-2 font-bold text-slate-600 border-slate-200" onClick={() => setActiveTab('calendar')}>
+                      <Button variant="outline" size="sm" className="gap-2 font-bold text-slate-600 border-slate-200" onClick={() => setActiveTab('calendar')}>
                         <Calendar className="w-4 h-4" /> Calendar
                       </Button>
                     </div>
@@ -304,18 +342,18 @@ const TeacherDashboard = () => {
                         { time: "11:30 AM", subject: "Science", class: "Class 7B", students: 28 },
                         { time: "02:00 PM", subject: "English", class: "Class 9A", students: 35 },
                       ].map((item, i) => (
-                        <div key={i} className="flex items-center justify-between p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors bg-white hover:bg-slate-50/50 group">
-                          <div className="flex items-center gap-6">
-                            <span className="font-bold text-indigo-600 text-sm whitespace-nowrap">{item.time}</span>
-                            <div className="w-px h-8 bg-slate-100"></div>
+                        <div key={i} className="flex items-center justify-between p-3 sm:p-4 rounded-xl border border-slate-100 hover:border-slate-200 transition-colors bg-white hover:bg-slate-50/50 group">
+                          <div className="flex items-center gap-4 sm:gap-6">
+                            <span className="font-bold text-indigo-600 text-[10px] sm:text-sm whitespace-nowrap">{item.time}</span>
+                            <div className="w-px h-6 sm:h-8 bg-slate-100"></div>
                             <div>
-                              <h4 className="font-bold text-slate-900">{item.subject}</h4>
-                              <p className="text-xs text-slate-500 font-bold">{item.class}</p>
+                              <h4 className="font-bold text-slate-900 text-sm sm:text-base">{item.subject}</h4>
+                              <p className="text-[10px] sm:text-xs text-slate-500 font-bold">{item.class}</p>
                             </div>
                           </div>
-                          <div className="flex items-center gap-2 text-slate-400">
-                            <Users className="w-4 h-4" />
-                            <span className="text-xs font-bold">{item.students}</span>
+                          <div className="flex items-center gap-1 sm:gap-2 text-slate-400">
+                            <Users className="w-3 h-3 sm:w-4 sm:h-4" />
+                            <span className="text-[10px] sm:text-xs font-bold">{item.students}</span>
                           </div>
                         </div>
                       ))}

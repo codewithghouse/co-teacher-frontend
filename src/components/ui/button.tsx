@@ -20,11 +20,11 @@ const buttonVariants = cva(
         success: "bg-success text-success-foreground hover:bg-success/90",
       },
       size: {
-        default: "h-10 px-4 py-2",
+        default: "h-11 px-6 py-2",
         sm: "h-9 rounded-md px-3",
-        lg: "h-12 rounded-lg px-8 text-base",
-        xl: "h-14 rounded-xl px-10 text-lg",
-        icon: "h-10 w-10",
+        lg: "h-14 rounded-lg px-8 text-base",
+        xl: "h-16 rounded-xl px-10 text-lg",
+        icon: "h-11 w-11",
       },
     },
     defaultVariants: {
@@ -36,7 +36,7 @@ const buttonVariants = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
+  VariantProps<typeof buttonVariants> {
   asChild?: boolean;
 }
 
