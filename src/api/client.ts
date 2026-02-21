@@ -1,7 +1,12 @@
 import axios from 'axios';
 import { useAuthStore } from '@/store/authStore';
 
-const baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+let baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+
+// Safety check: ensure baseURL ends with /api
+if (!baseURL.endsWith('/api') && !baseURL.endsWith('/api/')) {
+    baseURL = baseURL.endsWith('/') ? `${baseURL}api` : `${baseURL}/api`;
+}
 
 console.log(`[API] Client initializing with baseURL: ${baseURL}`);
 
