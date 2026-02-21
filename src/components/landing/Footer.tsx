@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-5 gap-12 mb-20">
           <div className="col-span-1 xs:col-span-2 md:col-span-2 space-y-8">
             <Link to="/" className="flex items-center gap-2 group">
-              <Logo className="w-12 h-12 bg-[#1A3263] rounded-2xl shadow-2xl p-2 transition-transform group-hover:scale-110" />
+              <Logo className="w-12 h-12 bg-[#215D5F] rounded-2xl shadow-2xl p-2 transition-transform group-hover:scale-110" />
               <span className="font-display font-bold text-2xl tracking-tight text-white">
                 AI Co-teacher
               </span>
@@ -22,7 +22,7 @@ const Footer = () => {
                 <a
                   key={i}
                   href="#"
-                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[#1A3263] hover:border-[#1A3263] transition-all duration-300 shadow-sm"
+                  className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white hover:bg-[#215D5F] hover:border-[#215D5F] transition-all duration-300 shadow-sm"
                   aria-label={`Social Media ${i}`}
                 >
                   <Icon className="w-5 h-5" />
