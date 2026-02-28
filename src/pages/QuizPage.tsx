@@ -192,9 +192,9 @@ export default function QuizPage() {
                     <Button
                         onClick={handleSubmit}
                         disabled={isSubmitted}
-                        className="rounded-xl h-10 sm:h-12 px-6 font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-100 transition-all hidden sm:flex"
+                        className="rounded-xl h-10 sm:h-12 px-3 sm:px-6 font-bold bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-100 transition-all text-xs sm:text-base"
                     >
-                        Submit Quiz
+                        Submit <span className="hidden sm:inline">Quiz</span>
                     </Button>
                 </div>
                 <div className="h-1 w-full bg-slate-100">
@@ -227,8 +227,8 @@ export default function QuizPage() {
                                         <Trophy className="w-12 h-12" />
                                     </div>
 
-                                    <h2 className="text-4xl font-black text-slate-900 mb-2 leading-tight">Quiz Summary</h2>
-                                    <p className="text-slate-400 font-bold uppercase tracking-widest text-xs mb-10">
+                                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-2 leading-tight">Quiz Summary</h2>
+                                    <p className="text-slate-400 font-bold uppercase tracking-widest text-[10px] sm:text-xs mb-8 sm:mb-10 px-4">
                                         {results.percentage >= 90 ? "Awesome! You're a true subject master! 🌟" :
                                             results.percentage >= 75 ? "Great work! You're racing ahead! 🚀" :
                                                 results.percentage >= 50 ? "Good effort! Solid progress being made! 📈" :
@@ -236,32 +236,31 @@ export default function QuizPage() {
                                     </p>
 
                                     {/* Main Stats Header */}
-                                    <div className="flex flex-col lg:flex-row gap-6 w-full mb-8">
-                                        <div className="flex-1 bg-[#0D5355] p-8 rounded-[2rem] text-white shadow-xl shadow-teal-100 flex flex-col items-center justify-center relative overflow-hidden group">
+                                    <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 w-full mb-8">
+                                        <div className="flex-1 bg-[#0D5355] p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] text-white shadow-xl shadow-teal-100 flex flex-col items-center justify-center relative overflow-hidden group">
                                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
                                                 <Sparkles className="w-20 h-20 text-white" />
                                             </div>
 
-                                            {/* Repositioned Motivational Badge (Top Center to clear label) */}
-                                            <div className="absolute top-6 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-[10px] font-black uppercase tracking-widest animate-pulse z-20 whitespace-nowrap">
+                                            <div className="absolute top-4 sm:top-6 left-1/2 -translate-x-1/2 px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30 text-[9px] sm:text-[10px] font-black uppercase tracking-widest animate-pulse z-20 whitespace-nowrap">
                                                 {results.percentage >= 90 ? "Subject Master!" :
                                                     results.percentage >= 75 ? "Expert Level!" :
                                                         results.percentage >= 40 ? "Keep Pushing!" :
                                                             "Starting Strong!"}
                                             </div>
 
-                                            <div className="pt-6 flex flex-col items-center">
+                                            <div className="pt-6 sm:pt-8 flex flex-col items-center">
                                                 <p className="text-indigo-100 text-[10px] font-black uppercase tracking-[0.2em] mb-1 relative z-10 opacity-80">Motivation Points</p>
-                                                <p className="text-6xl font-black relative z-10">{results.xp} <span className="text-2xl opacity-80 uppercase tracking-tighter">XP Earned!</span></p>
+                                                <p className="text-4xl sm:text-6xl font-black relative z-10">{results.xp} <span className="text-xl sm:text-2xl opacity-80 uppercase tracking-tighter">XP!</span></p>
                                             </div>
                                         </div>
 
-                                        <div className="flex-1 bg-emerald-600 p-8 rounded-[2rem] text-white shadow-xl shadow-emerald-100 flex flex-col items-center justify-center relative overflow-hidden group">
+                                        <div className="flex-1 bg-emerald-600 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] text-white shadow-xl shadow-emerald-100 flex flex-col items-center justify-center relative overflow-hidden group">
                                             <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:scale-125 transition-transform">
                                                 <Trophy className="w-20 h-20 text-white" />
                                             </div>
-                                            <p className="text-emerald-100 text-xs font-black uppercase tracking-widest mb-2 relative z-10">Teacher's Praise</p>
-                                            <p className="text-4xl font-black relative z-10">
+                                            <p className="text-emerald-100 text-[10px] sm:text-xs font-black uppercase tracking-widest mb-2 relative z-10">Teacher's Praise</p>
+                                            <p className="text-2xl sm:text-4xl font-black relative z-10">
                                                 {results.percentage >= 90 ? "AWESOME! 🌟" :
                                                     results.percentage >= 75 ? "GREAT! 🚀" :
                                                         results.percentage >= 50 ? "GOOD JOB! 📈" :
@@ -269,38 +268,38 @@ export default function QuizPage() {
                                             </p>
                                         </div>
 
-                                        <div className="flex-1 bg-white border-2 border-slate-100 p-8 rounded-[2rem] flex flex-col items-center justify-center group hover:border-indigo-200 transition-all relative">
-                                            <p className="text-slate-400 text-xs font-black uppercase tracking-widest mb-2">Student Proficiency</p>
-                                            <p className="text-4xl font-black text-slate-800">{results.level}</p>
+                                        <div className="flex-1 bg-white border-2 border-slate-100 p-6 sm:p-8 rounded-[1.5rem] sm:rounded-[2rem] flex flex-col items-center justify-center group hover:border-indigo-200 transition-all relative">
+                                            <p className="text-slate-400 text-[10px] sm:text-xs font-black uppercase tracking-widest mb-2 text-center">Student Proficiency</p>
+                                            <p className="text-2xl sm:text-4xl font-black text-slate-800 text-center">{results.level}</p>
                                         </div>
                                     </div>
 
                                     {/* Detailed Stats Grid */}
-                                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full mb-12">
-                                        <div className="bg-slate-50 border border-slate-100 p-6 rounded-3xl">
-                                            <p className="text-slate-500 text-[10px] font-black uppercase tracking-wider mb-2">Accuracy</p>
-                                            <p className="text-3xl font-black text-slate-800">{results.percentage}%</p>
+                                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 w-full mb-10 sm:mb-12">
+                                        <div className="bg-slate-50 border border-slate-100 p-4 sm:p-6 rounded-2xl sm:rounded-3xl">
+                                            <p className="text-slate-500 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1 sm:mb-2 text-center">Accuracy</p>
+                                            <p className="text-2xl sm:text-3xl font-black text-slate-800 text-center">{results.percentage}%</p>
                                         </div>
-                                        <div className="bg-emerald-50 border border-emerald-100 p-6 rounded-3xl">
-                                            <p className="text-slate-500 text-[10px] font-black uppercase tracking-wider mb-2">Correct</p>
-                                            <p className="text-3xl font-black text-emerald-600">{results.correct}</p>
+                                        <div className="bg-emerald-50 border border-emerald-100 p-4 sm:p-6 rounded-2xl sm:rounded-3xl">
+                                            <p className="text-slate-500 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1 sm:mb-2 text-center">Correct</p>
+                                            <p className="text-2xl sm:text-3xl font-black text-emerald-600 text-center">{results.correct}</p>
                                         </div>
-                                        <div className="bg-rose-50 border border-rose-100 p-6 rounded-3xl">
-                                            <p className="text-slate-500 text-[10px] font-black uppercase tracking-wider mb-2">Wrong</p>
-                                            <p className="text-3xl font-black text-rose-600">{results.wrong}</p>
+                                        <div className="bg-rose-50 border border-rose-100 p-4 sm:p-6 rounded-2xl sm:rounded-3xl">
+                                            <p className="text-slate-500 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1 sm:mb-2 text-center">Wrong</p>
+                                            <p className="text-2xl sm:text-3xl font-black text-rose-600 text-center">{results.wrong}</p>
                                         </div>
-                                        <div className="bg-slate-50 border border-slate-100 p-6 rounded-3xl">
-                                            <p className="text-slate-500 text-[10px] font-black uppercase tracking-wider mb-2">Skipped</p>
-                                            <p className="text-3xl font-black text-slate-600">{results.skipped}</p>
+                                        <div className="bg-slate-50 border border-slate-100 p-4 sm:p-6 rounded-2xl sm:rounded-3xl">
+                                            <p className="text-slate-500 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1 sm:mb-2 text-center">Skipped</p>
+                                            <p className="text-2xl sm:text-3xl font-black text-slate-600 text-center">{results.skipped}</p>
                                         </div>
                                     </div>
 
                                     <div className="flex flex-col sm:flex-row gap-4 w-full mb-6">
                                         <Button
                                             onClick={() => setIsReviewMode(true)}
-                                            className="h-16 flex-1 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-lg shadow-xl shadow-emerald-100 transition-all flex items-center justify-center gap-3"
+                                            className="h-14 sm:h-16 flex-1 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base sm:text-lg shadow-xl shadow-emerald-100 transition-all flex items-center justify-center gap-3"
                                         >
-                                            <CheckCircle2 className="w-6 h-6" /> Review Correct Answers
+                                            <CheckCircle2 className="w-5 h-5 sm:w-6 sm:h-6" /> Review Answers
                                         </Button>
                                     </div>
 
@@ -405,15 +404,15 @@ export default function QuizPage() {
                             </div>
                         ) : (
                             /* Question Card */
-                            <div className="bg-white rounded-[2rem] p-8 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 p-6">
-                                    <span className="text-xs font-black text-indigo-500 bg-indigo-50 px-3 py-1.5 rounded-full border border-indigo-100 uppercase tracking-widest">
-                                        Question {currentQuestionIndex + 1} of {quiz.questions.length}
+                            <div className="bg-white rounded-[1.5rem] sm:rounded-[2rem] p-5 sm:p-12 shadow-2xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
+                                <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+                                    <span className="text-[10px] sm:text-xs font-black text-indigo-500 bg-indigo-50 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full border border-indigo-100 uppercase tracking-widest">
+                                        {currentQuestionIndex + 1} / {quiz.questions.length}
                                     </span>
                                 </div>
 
-                                <div className="mt-4">
-                                    <h2 className="text-xl sm:text-3xl font-black text-slate-900 leading-tight mb-10">
+                                <div className="mt-8 sm:mt-4">
+                                    <h2 className="text-xl sm:text-3xl font-black text-slate-900 leading-tight mb-8 sm:mb-10 pr-12 sm:pr-0">
                                         {currentQuestion.question}
                                     </h2>
 

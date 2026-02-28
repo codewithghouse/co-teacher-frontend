@@ -247,9 +247,9 @@ export function PPTGeneratorTab() {
     };
 
     return (
-        <div className="space-y-6 max-w-6xl mx-auto pb-20">
+        <div className="space-y-6 max-w-6xl mx-auto px-4 sm:px-6 pb-20">
             {/* Header / Input Config Section */}
-            <div className="flex flex-col md:flex-row gap-8 items-stretch">
+            <div className="flex flex-col lg:flex-row gap-6 lg:gap-8 items-stretch">
                 <Card className="flex-1 bg-white/70 backdrop-blur-xl border-white/20 shadow-2xl overflow-hidden">
                     <div className="absolute inset-0 bg-gradient-to-br from-indigo-50/50 to-white/50 -z-10" />
                     <CardHeader className="pb-2">
@@ -406,8 +406,8 @@ export function PPTGeneratorTab() {
                                         Slide {idx + 1}
                                     </div>
 
-                                    {/* Slide Container */}
-                                    <div className="bg-black border-4 border-slate-900 rounded-xl overflow-hidden aspect-video shadow-2xl flex flex-col relative text-white">
+                                    {/* Slide Container - Responsive Aspect Ratio */}
+                                    <div className="bg-black border-2 sm:border-4 border-slate-900 rounded-xl overflow-hidden aspect-video shadow-2xl flex flex-col relative text-white text-[6px] sm:text-[10px] md:text-base">
 
                                         {/* Common Background: Clean Professional Look */}
                                         <div className="absolute inset-0 z-0 overflow-hidden">
@@ -428,14 +428,14 @@ export function PPTGeneratorTab() {
 
                                         {/* SLIDE TYPE 1: PROFESSIONAL TITLE SLIDE (Text Only) */}
                                         {slide.layout === 'organic_title' && (
-                                            <div className="flex-1 relative z-10 flex flex-col items-center justify-center p-16 h-full text-center">
+                                            <div className="flex-1 relative z-10 flex flex-col items-center justify-center p-6 sm:p-12 lg:p-16 h-full text-center">
                                                 <div className="max-w-4xl">
-                                                    <h1 className="text-7xl font-black text-white leading-tight mb-8 drop-shadow-lg tracking-tight">
+                                                    <h1 className="text-2xl sm:text-5xl lg:text-7xl font-black text-white leading-tight mb-4 sm:mb-8 drop-shadow-lg tracking-tight">
                                                         {slide.title}
                                                     </h1>
-                                                    <div className="w-48 bg-[#df9b58] h-2 mb-10 mx-auto rounded-full shadow-lg"></div>
-                                                    <p className="text-3xl text-[#fcd3b6] font-bold mb-4 tracking-wide uppercase drop-shadow-md">{slide.subtitle_1 || 'Grade 10 • CBSE'}</p>
-                                                    <p className="text-xl text-emerald-50 font-medium tracking-widest uppercase">{slide.subtitle_2 || 'Presented by Co-Teacher AI'}</p>
+                                                    <div className="w-24 sm:w-48 bg-[#df9b58] h-1 sm:h-2 mb-6 sm:mb-10 mx-auto rounded-full shadow-lg"></div>
+                                                    <p className="text-base sm:text-2xl lg:text-3xl text-[#fcd3b6] font-bold mb-2 sm:mb-4 tracking-wide uppercase drop-shadow-md">{slide.subtitle_1 || 'Grade 10 • CBSE'}</p>
+                                                    <p className="text-[10px] sm:text-base lg:text-xl text-emerald-50 font-medium tracking-widest uppercase">{slide.subtitle_2 || 'Presented by Co-Teacher AI'}</p>
                                                 </div>
                                             </div>
                                         )}
@@ -447,8 +447,8 @@ export function PPTGeneratorTab() {
                                                     /* VARIATION 1: Split Layout (Text Left / Image Right) - For Visual Interest */
                                                     <div className="flex w-full h-full">
                                                         {/* Text Side (60%) */}
-                                                        <div className="w-[60%] p-12 flex flex-col justify-center space-y-8 bg-white z-20 shadow-2xl">
-                                                            <div className="mb-2">
+                                                        <div className="w-[60%] p-4 sm:p-8 lg:p-12 flex flex-col justify-center space-y-3 sm:space-y-6 lg:space-y-8 bg-white z-20 shadow-2xl overflow-hidden">
+                                                            <div className="mb-0.5 sm:mb-2">
                                                                 {slide.tag && (
                                                                     <span className={`inline-block px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-4 text-white
                                                                         ${slide.theme === 'blue' ? 'bg-blue-500' :
